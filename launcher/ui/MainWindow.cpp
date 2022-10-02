@@ -1138,8 +1138,12 @@ void MainWindow::updateMainToolBar()
 void MainWindow::updateToolsMenu()
 {
     QToolButton *launchButton = dynamic_cast<QToolButton*>(ui->instanceToolBar->widgetForAction(ui->actionLaunchInstance));
+    QToolButton *killButton = dynamic_cast<QToolButton*>(ui->instanceToolBar->widgetForAction(ui->actionKillInstance));
 
     bool currentInstanceRunning = m_selectedInstance && m_selectedInstance->isRunning();
+
+    killButton->setVisible(currentInstanceRunning);
+    launchButton->setVisible(!currentInstanceRunning);
 
     ui->actionLaunchInstance->setDisabled(!m_selectedInstance || currentInstanceRunning);
     ui->actionLaunchInstanceOffline->setDisabled(!m_selectedInstance || currentInstanceRunning);
