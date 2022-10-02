@@ -1142,8 +1142,13 @@ void MainWindow::updateToolsMenu()
 
     bool currentInstanceRunning = m_selectedInstance && m_selectedInstance->isRunning();
 
-    killButton->setVisible(currentInstanceRunning);
-    launchButton->setVisible(!currentInstanceRunning);
+    if (currentInstanceRunning) {
+        killButton->show();
+        launchButton->hide();
+    } else {
+        killButton->hide();
+        launchButton->show();
+    }
 
     ui->actionLaunchInstance->setDisabled(!m_selectedInstance || currentInstanceRunning);
     ui->actionLaunchInstanceOffline->setDisabled(!m_selectedInstance || currentInstanceRunning);
