@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /*
  *  Prism Launcher - Minecraft Launcher
- *  Copyright (C) 2022 Tayou <tayou@gmx.net>
+ *  Copyright (C) 2022 - 2023 Tayou <tayou@gmx.net>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -137,13 +137,13 @@ void ThemeManager::setApplicationTheme(const QString& name)
     }
 }
 
-QString ThemeManager::getCatImage(QString catName)
+QString ThemeManager::getBackgroundImage(QString backgroundName)
 {
     QDateTime now = QDateTime::currentDateTime();
     QDateTime birthday(QDate(now.date().year(), 11, 30), QTime(0, 0));
     QDateTime xmas(QDate(now.date().year(), 12, 25), QTime(0, 0));
     QDateTime halloween(QDate(now.date().year(), 10, 31), QTime(0, 0));
-    QString cat = !catName.isEmpty() ? catName : APPLICATION->settings()->get("BackgroundCat").toString();
+    QString cat = !backgroundName.isEmpty() ? backgroundName : APPLICATION->settings()->get("BackgroundCat").toString();
     if (std::abs(now.daysTo(xmas)) <= 4) {
         cat += "-xmas";
     } else if (std::abs(now.daysTo(halloween)) <= 4) {
@@ -152,4 +152,29 @@ QString ThemeManager::getCatImage(QString catName)
         cat += "-bday";
     }
     return cat;
+}
+
+void ThemeManager::initializeBackgrounds() {
+    QString backgroundsFolder = QDir("./backgrounds/").absoluteFilePath("");
+    themeDebugLog() << "Theme Folder Path: " << backgroundsFolder;
+
+    QDirIterator directoryIterator(backgroundsFolder, QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    while (directoryIterator.hasNext()) {
+        QDir dir(directoryIterator.next());
+        QFileInfo manifest(dir.absoluteFilePath("manifest.json"));
+        if (manifest.exists()) {
+            // Load background manifest
+            themeDebugLog() << "Loading background manifest from:" << manifest.absoluteFilePath();
+            addTheme(std::make_unique<Background>(manifest));
+        } else {
+            // Load image files directly
+            QDirIterator ImageFileIterator(dir.absoluteFilePath(""), { "*.png", "*.gif", "*.jpg", "*.apng", "*.jxl", "*.avif" }, QDir::Files);
+            while (ImageFileIterator.hasNext()) {
+                QFile customThemeFile(ImageFileIterator.next());
+                QFileInfo customThemeFileInfo(customThemeFile);
+                themeDebugLog() << "Loading QSS Theme from:" << customThemeFileInfo.absoluteFilePath();
+                addTheme(std::make_unique<Background>(customThemeFileInfo.baseName(), customThemeFileInfo));
+            }
+        }
+    }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /*
  *  Prism Launcher - Minecraft Launcher
- *  Copyright (C) 2022 Tayou <tayou@gmx.net>
+ *  Copyright (C) 2022 - 2023 Tayou <tayou@gmx.net>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include "ui/MainWindow.h"
 #include "ui/themes/ITheme.h"
+#include "ui/themes/Background.h"
 
 inline auto themeDebugLog()
 {
@@ -36,22 +37,23 @@ class ThemeManager {
     ThemeManager(MainWindow* mainWindow);
 
     QList<ITheme*> getValidApplicationThemes();
+    QList<Background*> getValidApplicationBackgrounds();
     void setIconTheme(const QString& name);
     void applyCurrentlySelectedTheme();
     void setApplicationTheme(const QString& name);
-
-    /// <summary>
-    /// Returns the cat based on selected cat and with events (Birthday, XMas, etc.)
-    /// </summary>
-    /// <param name="catName">Optional, if you need a specific cat.</param>
-    /// <returns></returns>
-    static QString getCatImage(QString catName = "");
+         
+    /// @brief Returns the background based on selected and with events (Birthday, XMas, etc.)
+    /// @param backgroundName Optional, if you need a specific background.
+    /// @return 
+    static QString getBackgroundImage(QString backgroundName = "");
 
    private:
     std::map<QString, std::unique_ptr<ITheme>> m_themes;
+    std::map<QString, std::unique_ptr<Background>> m_backgrounds;
     MainWindow* m_mainWindow;
 
     void initializeThemes();
     QString addTheme(std::unique_ptr<ITheme> theme);
     ITheme* getTheme(QString themeId);
+    void initializeBackgrounds();
 };

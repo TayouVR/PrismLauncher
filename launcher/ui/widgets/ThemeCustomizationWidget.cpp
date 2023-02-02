@@ -136,7 +136,7 @@ void ThemeCustomizationWidget::loadSettings()
 
     auto cat = settings->get("BackgroundCat").toString();
     for (auto& catFromList : m_catOptions) {
-        QIcon catIcon = QIcon(QString(":/backgrounds/%1").arg(ThemeManager::getCatImage(catFromList.first)));
+        QIcon catIcon = QIcon(QString(":/backgrounds/%1").arg(ThemeManager::getBackgroundImage(catFromList.first)));
         ui->backgroundCatComboBox->addItem(catIcon, catFromList.second);
         if (cat == catFromList.first) {
             ui->backgroundCatComboBox->setCurrentIndex(ui->backgroundCatComboBox->count() - 1);

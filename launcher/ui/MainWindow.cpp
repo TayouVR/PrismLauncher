@@ -897,7 +897,7 @@ InstanceView
     background-repeat: none;
     background-color:palette(base);
 })")
-                                .arg(ThemeManager::getCatImage()));
+                                .arg(ThemeManager::getBackgroundImage()));
     } else {
         view->setStyleSheet(QString());
     }
