@@ -41,4 +41,5 @@ class GameOptionDelegate : public QStyledItemDelegate {
    private:
     std::vector<GameOptionItem>* contents;
     QList<std::shared_ptr<KeyBindData>>* keybindingOptions;
+    QPushButton* makeResetButton(QWidget*, std::shared_ptr<GameOption>&, QRect);
 };

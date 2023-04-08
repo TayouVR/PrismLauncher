@@ -174,15 +174,19 @@ bool GameOptions::setData(const QModelIndex& index, const QVariant& value, int r
         switch (contents[row].type) {
             case OptionType::String: {
                 contents[row].value = value.toString();
+                return true;
             }
             case OptionType::Int: {
                 contents[row].intValue = value.toInt();
+                return true;
             }
             case OptionType::Bool: {
                 contents[row].boolValue = value.toBool();
+                return true;
             }
             case OptionType::Float: {
                 contents[row].floatValue = value.toFloat();
+                return true;
             }
         }
     }
