@@ -86,6 +86,6 @@ class GameOptions : public QAbstractItemModel {
     QString path;
     int version = 0;
 
-    QMap<QString, std::shared_ptr<GameOption>>* knownOptions;
-    QList<std::shared_ptr<KeyBindData>>* keybindingOptions;
+    QMap<QString, std::shared_ptr<GameOption>>* knownOptions{};
+    QList<std::shared_ptr<KeyBindData>>* keybindingOptions{};
 };

@@ -38,8 +38,9 @@ class GameOptionDelegate : public QStyledItemDelegate {
                                                    const QModelIndex& index) const override;
     void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 
+    enum GameOptionWidgetType { slider, text, keybind, number, comboBox };
+
    private:
     std::vector<GameOptionItem>* contents;
     QList<std::shared_ptr<KeyBindData>>* keybindingOptions;
-    QPushButton* makeResetButton(QWidget*, std::shared_ptr<GameOption>&, QRect);
 };

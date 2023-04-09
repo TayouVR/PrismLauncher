@@ -97,12 +97,12 @@ bool load(const QString& path,
             item.type = OptionType::Float;
             // qDebug() << "The value" << value << "is a float";
         } else if (item.value == "true" || item.value == "false") {
-            item.boolValue = item.value == "true" ? true : false;
+            item.boolValue = item.value == "true";
             item.type = OptionType::Bool;
             qDebug() << "The value" << item.value << "is a bool";
         } else if (item.value.endsWith("]") && item.value.startsWith("[")) {
             qDebug() << "The value" << item.value << "is an array";
-            for (QString part : item.value.mid(1, item.value.size() - 2).split(",")) {
+            for (const QString& part : item.value.mid(1, item.value.size() - 2).split(",")) {
                 GameOptionChildItem child{ part, static_cast<int>(contents.size()) };
                 qDebug() << "Array has entry" << part;
                 item.children.append(child);
@@ -188,6 +188,8 @@ bool GameOptions::setData(const QModelIndex& index, const QVariant& value, int r
                 contents[row].floatValue = value.toFloat();
                 return true;
             }
+            case OptionType::KeyBind:
+                break;
         }
     }
 
@@ -374,7 +376,7 @@ QModelIndex GameOptions::index(int row, int column, const QModelIndex& parent) c
         GameOptionItem* item = static_cast<GameOptionItem*>(parent.internalPointer());
         return createIndex(row, column, &item->children[row]);
     } else {
-        return createIndex(row, column, &contents[row]);
+        return createIndex(row, column, reinterpret_cast<quintptr>(&contents[row]));
     }
 }
 
@@ -391,7 +393,7 @@ QModelIndex GameOptions::parent(const QModelIndex& index) const
         return QModelIndex();
     } else {
         GameOptionChildItem* child = static_cast<GameOptionChildItem*>(index.internalPointer());
-        return createIndex(child->parentRow, 0, &contents[child->parentRow]);
+        return createIndex(child->parentRow, 0, reinterpret_cast<quintptr>(&contents[child->parentRow]));
     }
 }
 

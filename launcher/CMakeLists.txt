@@ -938,6 +938,9 @@ SET(LAUNCHER_SOURCES
     ui/widgets/WideBar.cpp
     ui/widgets/ThemeCustomizationWidget.h
     ui/widgets/ThemeCustomizationWidget.cpp
+    ui/widgets/GameOptionWidget.h
+    ui/widgets/GameOptionWidgetSlider.h
+    ui/widgets/GameOptionWidgetSlider.cpp
 
     # GUI - instance group view
     ui/instanceview/InstanceProxyModel.cpp
@@ -990,6 +993,7 @@ qt_wrap_ui(LAUNCHER_UI
     ui/widgets/InfoFrame.ui
     ui/widgets/ModFilterWidget.ui
     ui/widgets/ThemeCustomizationWidget.ui
+    ui/widgets/GameOptionWidgetSlider.ui
     ui/dialogs/CopyInstanceDialog.ui
     ui/dialogs/ProfileSetupDialog.ui
     ui/dialogs/ProgressDialog.ui
