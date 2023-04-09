@@ -30,7 +30,11 @@ GameOptionWidgetSlider::GameOptionWidgetSlider(QWidget* parent, std::shared_ptr<
 {
     ui->setupUi(this);
 
+    ui->resetButton->setMaximumWidth(ui->resetButton->height());
+
     if (knownOption->type == OptionType::Float) {
+        ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultFloat()));
+
         ui->slider->setMinimum(knownOption->getFloatRange().min * 100);
         ui->slider->setMaximum(knownOption->getFloatRange().max * 100);
 
@@ -40,6 +44,8 @@ GameOptionWidgetSlider::GameOptionWidgetSlider(QWidget* parent, std::shared_ptr<
 
         connect(ui->slider, QOverload<int>::of(&QSlider::valueChanged), this, [&](int value) { ui->currentValue->setText(value + ""); });
     } else { // Int slider
+        ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultInt()));
+
         ui->slider->setMinimum(knownOption->getIntRange().min);
         ui->slider->setMaximum(knownOption->getIntRange().max);
 
@@ -57,10 +63,13 @@ void GameOptionWidgetSlider::setEditorData(GameOptionItem optionItem) {
             return;
         }
         case OptionType::Float: {
-            ui->slider->setValue(optionItem.floatValue);
+            ui->slider->setValue(optionItem.floatValue * 100);
             return;
         }
         default:
             return;
     }
+}
+GameOptionWidgetSlider::~GameOptionWidgetSlider() {
+    destroy(ui);
 }

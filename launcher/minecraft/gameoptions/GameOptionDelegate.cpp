@@ -17,93 +17,25 @@
  */
 #include "GameOptionDelegate.h"
 #include "ui/widgets/GameOptionWidget.h"
+#include "ui/widgets/GameOptionWidgetCheckBox.h"
+#include "ui/widgets/GameOptionWidgetComboBox.h"
 #include "ui/widgets/GameOptionWidgetSlider.h"
 
-#include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QKeySequenceEdit>
 #include <QLineEdit>
-#include <QPushButton>
-#include <QSlider>
-#include <QSpinBox>
-
-namespace {
-
-
-/// @brief gets the following layout for widgets in four QRects:
-///     #------------#----------------------------#------------#----------#
-///     | minus      | main widget                | plus       | reset to |
-///     | (optional) | (slider, text field, etc.) | (optional) | default  |
-///     #------------#----------------------------#------------#----------#
-/// @param mainWidget
-/// @param resetWidget
-/// @param subWidget
-/// @param addWidget
-/// @param valueDisplayWidget
-void getWidgetDimensions(QRect sourceWidget,
-                         QRect& mainWidget,
-                         QRect& resetWidget,
-                         QRect& subWidget,
-                         QRect& addWidget,
-                         QRect& valueDisplayWidget,
-                         GameOptionDelegate::GameOptionWidgetType type)
-{
-    int smallButtonSize = type == GameOptionDelegate::GameOptionWidgetType::slider ? 30 : 0;
-    int valueDisplaySize = type == GameOptionDelegate::GameOptionWidgetType::slider ? 50 : 0;
-    int resetButtonSize = 30;
-
-    // subtraction widget
-    subWidget.setWidth(smallButtonSize);
-    subWidget.setY(0);
-
-    // addition widget
-    addWidget.setWidth(smallButtonSize);
-    addWidget.setY(30);
-
-    // main widget
-    mainWidget.setWidth(sourceWidget.width() - smallButtonSize * 2 - resetButtonSize - valueDisplaySize);
-    mainWidget.setY(smallButtonSize);
-
-    // reset widget
-    resetWidget.setWidth(resetButtonSize);
-    resetWidget.setY(sourceWidget.width() - resetButtonSize);
-
-    // value display widget
-    valueDisplayWidget.setWidth(valueDisplaySize);
-    valueDisplayWidget.setY(sourceWidget.width() - resetButtonSize - valueDisplaySize);
-}
-
-void applyWidgetDimensions() {}
-
-}  // namespace
 
 QWidget* GameOptionDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     std::shared_ptr<GameOption> knownOption = contents->at(index.row()).knownOption;
-    
-    // define rects for widgets to be used in any type
-    QRect mainWidget;
-    QRect resetWidget;
-    QRect subWidget;
-    QRect addWidget;
-    QRect valueDisplayWidget;
 
     switch (contents->at(index.row()).type) {
         case OptionType::String: {
             if (knownOption != nullptr && !knownOption->validValues.isEmpty()) {
-                QComboBox* comboBox = new QComboBox(parent);
-                for (auto value : knownOption->validValues) {
-                    comboBox->addItem(value);
-                }
-
-                getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::comboBox);
-                comboBox->setGeometry(mainWidget);
-                return comboBox;
+                return new GameOptionWidgetComboBox(parent, knownOption);
             } else {
                 QLineEdit* textField = new QLineEdit(parent);
-                getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::text);
-                textField->setGeometry(mainWidget);
                 return textField;
             }
         }
@@ -112,31 +44,22 @@ QWidget* GameOptionDelegate::createEditor(QWidget* parent, const QStyleOptionVie
                 return new GameOptionWidgetSlider(parent, knownOption);
             } else {
                 QSpinBox* intInput = new QSpinBox(parent);
-                getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::number);
-                intInput->setGeometry(mainWidget);
                 return intInput;
             }
         }
         case OptionType::Bool: {
-            QCheckBox* checkBox = new QCheckBox(parent);
-            getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::text);
-            checkBox->setGeometry(mainWidget);
-            return checkBox;
+            return new GameOptionWidgetCheckBox(parent, knownOption);
         }
         case OptionType::Float: {
             if (knownOption != nullptr && (knownOption->getFloatRange().max != 0 || knownOption->getFloatRange().min != 0)) {
                 return new GameOptionWidgetSlider(parent, knownOption);
             } else {
                 QDoubleSpinBox* floatInput = new QDoubleSpinBox(parent);
-                getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::number);
-                floatInput->setGeometry(mainWidget);
                 return floatInput;
             }
         }
         case OptionType::KeyBind: {
             QKeySequenceEdit* keySequenceEdit = new QKeySequenceEdit(parent);
-            getWidgetDimensions(option.rect, mainWidget, resetWidget, subWidget, addWidget, valueDisplayWidget, GameOptionWidgetType::keybind);
-            keySequenceEdit->setGeometry(mainWidget);
             return keySequenceEdit;
         }
         default:
@@ -150,7 +73,11 @@ void GameOptionDelegate::setEditorData(QWidget* editor, const QModelIndex& index
 
     GameOptionItem optionItem = contents->at(index.row());
 
-    widget->setEditorData(optionItem);
+    if (widget != nullptr) {
+        widget->setEditorData(optionItem);
+    } else {
+        qDebug() << "[GameOptions] Setting widget data failed because widget was still null";
+    }
 
     /*switch (contents->at(index.row()).type) {
         case OptionType::String: {

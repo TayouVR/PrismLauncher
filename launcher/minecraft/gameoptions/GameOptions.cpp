@@ -153,17 +153,15 @@ QVariant GameOptions::headerData(int section, Qt::Orientation orientation, int r
     if (role != Qt::DisplayRole) {
         return QAbstractItemModel::headerData(section, orientation, role);
     }
-    switch (section) {
-        case 0:
-            return tr("Key");
-        case 1:
-            return tr("Description");
-        case 2:
-            return tr("Value");
-        case 3:
-            return tr("Default Value");
+    switch ((Column)section) {
         default:
             return QVariant();
+        case Column::Key:
+            return tr("Key");
+        case Column::Description:
+            return tr("Description");
+        case Column::Value:
+            return tr("Value");
     }
 }
 bool GameOptions::setData(const QModelIndex& index, const QVariant& value, int role)
@@ -221,9 +219,6 @@ Qt::ItemFlags GameOptions::flags(const QModelIndex& index) const
     /*if (column == Column::Value || column == Column::DefaultValue) {
         flags = flags | Qt::ItemFlag::ItemIsUserCheckable;
     }*/
-    if (column == Column::DefaultValue) {
-        flags = flags & ~Qt::ItemFlag::ItemIsEnabled;
-    }
 
     return flags;
 }

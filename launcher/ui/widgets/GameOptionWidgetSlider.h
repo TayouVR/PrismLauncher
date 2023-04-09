@@ -18,7 +18,6 @@
 #pragma once
 
 #include <QString>
-#include <QStyledItemDelegate>
 #include <QWidget>
 
 #include "GameOptionWidget.h"
@@ -30,6 +29,7 @@ class GameOptionWidgetSlider;
 class GameOptionWidgetSlider : public GameOptionWidget {
    public:
     GameOptionWidgetSlider(QWidget* parent, std::shared_ptr<GameOption> knownOption);
+    ~GameOptionWidgetSlider() override;
     void setEditorData(GameOptionItem optionItem);
 
    private:
