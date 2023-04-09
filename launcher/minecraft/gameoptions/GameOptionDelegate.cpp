@@ -25,10 +25,7 @@
 #include "ui/widgets/GameOptionWidgetSpinnerInt.h"
 #include "ui/widgets/GameOptionWidgetText.h"
 
-#include <QComboBox>
-#include <QDoubleSpinBox>
-#include <QKeySequenceEdit>
-#include <QLineEdit>
+#include <QDebug>
 
 QWidget* GameOptionDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {

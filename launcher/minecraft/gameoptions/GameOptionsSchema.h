@@ -26,7 +26,7 @@
 enum class OptionType { String, Int, Float, Bool, KeyBind };
 
 template <class T> struct Range {
-    typename T min, max;
+    T min, max;
 };
 
 union UniversalRange {
