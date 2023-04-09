@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>GameOptionWidgetComboBox</class>
- <widget class="GameOptionWidget" name="GameOptionWidgetComboBox">
+ <widget class="QWidget" name="GameOptionWidgetComboBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -44,14 +44,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>GameOptionWidget</class>
-   <extends>QWidget</extends>
-   <header>GameOptionWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

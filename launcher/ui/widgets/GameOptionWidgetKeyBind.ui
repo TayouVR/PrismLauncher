@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>GameOptionWidgetKeyBind</class>
- <widget class="GameOptionWidget" name="GameOptionWidgetKeyBind">
+ <widget class="QWidget" name="GameOptionWidgetKeyBind">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -51,14 +51,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>GameOptionWidget</class>
-   <extends>QWidget</extends>
-   <header>GameOptionWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
