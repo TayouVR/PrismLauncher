@@ -949,64 +949,7 @@ SET(LAUNCHER_SOURCES
     ui/instanceview/VisualGroup.h
 )
 
-qt_wrap_ui(LAUNCHER_UI
-    ui/MainWindow.ui
-    ui/setupwizard/PasteWizardPage.ui
-    ui/setupwizard/ThemeWizardPage.ui
-    ui/pages/global/AccountListPage.ui
-    ui/pages/global/JavaPage.ui
-    ui/pages/global/LauncherPage.ui
-    ui/pages/global/APIPage.ui
-    ui/pages/global/ProxyPage.ui
-    ui/pages/global/MinecraftPage.ui
-    ui/pages/global/ExternalToolsPage.ui
-    ui/pages/instance/ExternalResourcesPage.ui
-    ui/pages/instance/NotesPage.ui
-    ui/pages/instance/LogPage.ui
-    ui/pages/instance/ServersPage.ui
-    ui/pages/instance/GameOptionsPage.ui
-    ui/pages/instance/OtherLogsPage.ui
-    ui/pages/instance/InstanceSettingsPage.ui
-    ui/pages/instance/VersionPage.ui
-    ui/pages/instance/ManagedPackPage.ui
-    ui/pages/instance/WorldListPage.ui
-    ui/pages/instance/ScreenshotsPage.ui
-    ui/pages/modplatform/atlauncher/AtlOptionalModDialog.ui
-    ui/pages/modplatform/atlauncher/AtlPage.ui
-    ui/pages/modplatform/VanillaPage.ui
-    ui/pages/modplatform/ResourcePage.ui
-    ui/pages/modplatform/flame/FlamePage.ui
-    ui/pages/modplatform/legacy_ftb/Page.ui
-    ui/pages/modplatform/ImportPage.ui
-    ui/pages/modplatform/ftb/FtbPage.ui
-    ui/pages/modplatform/modrinth/ModrinthPage.ui
-    ui/pages/modplatform/technic/TechnicPage.ui
-    ui/widgets/InstanceCardWidget.ui
-    ui/widgets/CustomCommands.ui
-    ui/widgets/InfoFrame.ui
-    ui/widgets/ModFilterWidget.ui
-    ui/widgets/ThemeCustomizationWidget.ui
-    ui/dialogs/CopyInstanceDialog.ui
-    ui/dialogs/ProfileSetupDialog.ui
-    ui/dialogs/ProgressDialog.ui
-    ui/dialogs/NewInstanceDialog.ui
-    ui/dialogs/NewComponentDialog.ui
-    ui/dialogs/NewsDialog.ui
-    ui/dialogs/ProfileSelectDialog.ui
-    ui/dialogs/SkinUploadDialog.ui
-    ui/dialogs/ExportInstanceDialog.ui
-    ui/dialogs/IconPickerDialog.ui
-    ui/dialogs/ImportResourceDialog.ui
-    ui/dialogs/MSALoginDialog.ui
-    ui/dialogs/OfflineLoginDialog.ui
-    ui/dialogs/AboutDialog.ui
-    ui/dialogs/LoginDialog.ui
-    ui/dialogs/EditAccountDialog.ui
-    ui/dialogs/ReviewMessageBox.ui
-    ui/dialogs/ScrollMessageBox.ui
-    ui/dialogs/BlockedModsDialog.ui
-    ui/dialogs/ChooseProviderDialog.ui
-)
+set(CMAKE_AUTOUIC)
 
 qt_add_resources(LAUNCHER_RESOURCES
     resources/backgrounds/backgrounds.qrc
