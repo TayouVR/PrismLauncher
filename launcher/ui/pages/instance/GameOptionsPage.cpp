@@ -50,6 +50,9 @@ GameOptionsPage::GameOptionsPage(MinecraftInstance * inst, QWidget* parent)
     ui->optionsView->setModel(m_model.get());
     ui->optionsView->setItemDelegateForColumn(2, new GameOptionDelegate(ui->optionsView, m_model->getContents()));
     ui->optionsView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    for (int i = 0; i < m_model->getContents()->size(); ++i) {
+        ui->optionsView->openPersistentEditor(m_model->index(i, 2));
+    }
     auto head = ui->optionsView->header();
     head->setDefaultSectionSize(250);
     if(head->count())
