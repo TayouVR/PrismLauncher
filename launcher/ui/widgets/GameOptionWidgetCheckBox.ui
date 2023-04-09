@@ -52,7 +52,7 @@
   <customwidget>
    <class>GameOptionWidget</class>
    <extends>QWidget</extends>
-   <header>gameoptionwidget.h</header>
+   <header>GameOptionWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
