@@ -28,17 +28,15 @@ class GameOptionWidget : public QWidget {
    public:
     GameOptionWidget(QWidget* parent) : QWidget(parent){};
     virtual void setEditorData(GameOptionItem optionItem) = 0;
+    virtual void saveEditorData(GameOptionItem optionItem) = 0;
+
+    void setSize(QRect size) {
+        setGeometry(size);
+        sizeHintData = QSize(size.height(), size.width());
+    }
+
+    QSize sizeHint() const override { return sizeHintData; }
 
    protected:
-    QPushButton* makeResetButton(QWidget* parent, std::shared_ptr<GameOption>& knownOption, QRect rect)
-    {
-        if (knownOption != nullptr) {
-            QPushButton* resetButton = new QPushButton(parent);
-            resetButton->setText("↺");
-            resetButton->setGeometry(rect);
-            resetButton->setToolTip(tr("Default Value: ") + knownOption->getDefaultString());
-            return resetButton;
-        }
-        return nullptr;
-    }
+    QSize sizeHintData;
 };

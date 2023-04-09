@@ -38,3 +38,6 @@ GameOptionWidgetComboBox::~GameOptionWidgetComboBox()
 void GameOptionWidgetComboBox::setEditorData(GameOptionItem optionItem) {
     ui->comboBox->setCurrentIndex(ui->comboBox->findText(optionItem.value));
 }
+void GameOptionWidgetComboBox::saveEditorData(GameOptionItem optionItem) {
+    optionItem.value = ui->comboBox->currentText();
+}

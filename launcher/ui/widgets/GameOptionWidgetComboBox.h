@@ -32,6 +32,7 @@ class GameOptionWidgetComboBox : public GameOptionWidget {
     explicit GameOptionWidgetComboBox(QWidget* parent, std::shared_ptr<GameOption> knownOption);
     ~GameOptionWidgetComboBox() override;
     void setEditorData(GameOptionItem optionItem) override;
+    void saveEditorData(GameOptionItem optionItem) override;
 
    private:
     Ui::GameOptionWidgetComboBox* ui;

@@ -41,3 +41,6 @@ void GameOptionWidgetCheckBox::setEditorData(GameOptionItem optionItem) {
     ui->checkBox->setText(optionItem.boolValue ? "true" : "false");
     ui->checkBox->setChecked(optionItem.boolValue);
 }
+void GameOptionWidgetCheckBox::saveEditorData(GameOptionItem optionItem) {
+    optionItem.boolValue = ui->checkBox->isChecked();
+}

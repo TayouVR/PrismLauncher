@@ -27,6 +27,8 @@ class GameOptionWidgetText;
 }
 
 class GameOptionWidgetText : public GameOptionWidget {
+   public:
+    void saveEditorData(GameOptionItem optionItem) override;
 
    public:
     explicit GameOptionWidgetText(QWidget* parent, const std::shared_ptr<GameOption>& knownOption);

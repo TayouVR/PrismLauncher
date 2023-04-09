@@ -35,4 +35,7 @@ class GameOptionWidgetSpinnerFloat : public GameOptionWidget {
 
    private:
     Ui::GameOptionWidgetSpinnerFloat* ui;
+
+   public:
+    void saveEditorData(GameOptionItem optionItem) override;
 };

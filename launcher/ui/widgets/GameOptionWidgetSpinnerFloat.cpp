@@ -23,8 +23,13 @@ GameOptionWidgetSpinnerFloat::GameOptionWidgetSpinnerFloat(QWidget* parent, std:
 {
     ui->setupUi(this);
 
-    ui->resetButton->setMaximumWidth(ui->resetButton->height());
-    ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultFloat()));
+    if (knownOption == nullptr) {
+        ui->horizontalLayout->removeWidget(ui->resetButton);
+        delete ui->resetButton;
+    } else {
+        ui->resetButton->setMaximumWidth(ui->resetButton->height());
+        ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultFloat()));
+    }
 }
 
 GameOptionWidgetSpinnerFloat::~GameOptionWidgetSpinnerFloat()
@@ -34,4 +39,7 @@ GameOptionWidgetSpinnerFloat::~GameOptionWidgetSpinnerFloat()
 
 void GameOptionWidgetSpinnerFloat::setEditorData(GameOptionItem optionItem) {
     ui->doubleSpinBox->setValue(optionItem.floatValue);
+}
+void GameOptionWidgetSpinnerFloat::saveEditorData(GameOptionItem optionItem) {
+    optionItem.floatValue = ui->doubleSpinBox->value();
 }

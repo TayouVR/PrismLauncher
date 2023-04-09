@@ -32,6 +32,7 @@ class GameOptionWidgetKeyBind : public GameOptionWidget {
     explicit GameOptionWidgetKeyBind(QWidget* parent, std::shared_ptr<GameOption> knownOption);
     ~GameOptionWidgetKeyBind() override;
     void setEditorData(GameOptionItem optionItem) override;
+    void saveEditorData(GameOptionItem optionItem) override;
 
    private:
     Ui::GameOptionWidgetKeyBind* ui;

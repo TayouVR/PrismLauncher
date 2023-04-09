@@ -31,6 +31,7 @@ class GameOptionWidgetSlider : public GameOptionWidget {
     GameOptionWidgetSlider(QWidget* parent, std::shared_ptr<GameOption> knownOption);
     ~GameOptionWidgetSlider() override;
     void setEditorData(GameOptionItem optionItem);
+    void saveEditorData(GameOptionItem optionItem) override;
 
    private:
     Ui::GameOptionWidgetSlider* ui;

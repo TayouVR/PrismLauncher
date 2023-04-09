@@ -62,16 +62,30 @@ void GameOptionWidgetSlider::setEditorData(GameOptionItem optionItem) {
     switch (optionItem.type) {
         case OptionType::Int: {
             ui->slider->setValue(optionItem.intValue);
-            return;
+            break;
         }
         case OptionType::Float: {
             ui->slider->setValue(optionItem.floatValue * 100);
-            return;
+            break;
         }
         default:
-            return;
+            break;
     }
 }
 GameOptionWidgetSlider::~GameOptionWidgetSlider() {
     destroy(ui);
+}
+void GameOptionWidgetSlider::saveEditorData(GameOptionItem optionItem) {
+    switch (optionItem.type) {
+        case OptionType::Int: {
+            optionItem.intValue = ui->slider->value();
+            break;
+        }
+        case OptionType::Float: {
+            optionItem.floatValue = ui->slider->value() / 100.0f;
+            break;
+        }
+        default:
+            break;
+    }
 }

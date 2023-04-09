@@ -32,6 +32,7 @@ class GameOptionWidgetCheckBox : public GameOptionWidget {
     explicit GameOptionWidgetCheckBox(QWidget* parent, std::shared_ptr<GameOption> knownOption);
     ~GameOptionWidgetCheckBox() override;
     void setEditorData(GameOptionItem optionItem) override;
+    void saveEditorData(GameOptionItem optionItem) override;
 
    private:
     Ui::GameOptionWidgetCheckBox* ui;
