@@ -23,10 +23,12 @@ GameOptionWidgetCheckBox::GameOptionWidgetCheckBox(QWidget* parent, std::shared_
 {
     ui->setupUi(this);
 
-    ui->resetButton->setMaximumWidth(ui->resetButton->height());
-    ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultString()));
-
-    for (const auto& value : knownOption->validValues) {
+    if (knownOption == nullptr) {
+        ui->horizontalLayout->removeWidget(ui->resetButton);
+        delete ui->resetButton;
+    } else {
+        ui->resetButton->setMaximumWidth(ui->resetButton->height());
+        ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultBool() ? "true" : "false"));
     }
 }
 

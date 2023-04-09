@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GameOptionWidgetCheckBox</class>
- <widget class="GameOptionWidget" name="GameOptionWidgetCheckBox">
+ <class>GameOptionWidgetSpinnerFloat</class>
+ <widget class="GameOptionWidget" name="GameOptionWidgetSpinnerFloat">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>42</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,11 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="text">
-      <string>CheckBox</string>
-     </property>
-    </widget>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
    </item>
    <item>
     <widget class="QPushButton" name="resetButton">

@@ -42,17 +42,19 @@ GameOptionWidgetSlider::GameOptionWidgetSlider(QWidget* parent, std::shared_ptr<
         ui->maxLabel->setText(QString("%1").arg(knownOption->getFloatRange().max));
         ui->minLabel->setText(QString("%1").arg(knownOption->getFloatRange().min));
 
-        connect(ui->slider, QOverload<int>::of(&QSlider::valueChanged), this, [&](int value) { ui->currentValue->setText(value + ""); });
+        connect(ui->slider, QOverload<int>::of(&QSlider::valueChanged), this, [&](int value) { ui->spinBox->setValue(value); });
+        connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int value) { ui->slider->setValue(value); });
     } else { // Int slider
         ui->resetButton->setToolTip(QString(tr("Default Value: %1")).arg(knownOption->getDefaultInt()));
 
         ui->slider->setMinimum(knownOption->getIntRange().min);
         ui->slider->setMaximum(knownOption->getIntRange().max);
 
-        ui->maxLabel->setText(knownOption->getIntRange().max + "");
-        ui->minLabel->setText(knownOption->getIntRange().min + "");
+        ui->maxLabel->setText(QString("%1").arg(knownOption->getIntRange().max));
+        ui->minLabel->setText(QString("%1").arg(knownOption->getIntRange().min));
 
-        connect(ui->slider, QOverload<int>::of(&QSlider::valueChanged), this, [&](int value) { ui->currentValue->setText(QString("%1").arg(value / 100.0f)); });
+        connect(ui->slider, QOverload<int>::of(&QSlider::valueChanged), this, [&](int value) { ui->spinBox->setValue(value / 100.0f); });
+        connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, [&](int value) { ui->slider->setValue(value * 100.0f); });
     }
 }
 

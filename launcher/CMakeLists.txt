@@ -941,10 +941,18 @@ SET(LAUNCHER_SOURCES
     ui/widgets/GameOptionWidget.h
     ui/widgets/GameOptionWidgetSlider.h
     ui/widgets/GameOptionWidgetSlider.cpp
-    ui/widgets/GameOptionWidgetComboBox.cpp
     ui/widgets/GameOptionWidgetComboBox.h
+    ui/widgets/GameOptionWidgetComboBox.cpp
     ui/widgets/GameOptionWidgetCheckBox.h
     ui/widgets/GameOptionWidgetCheckBox.cpp
+    ui/widgets/GameOptionWidgetSpinnerFloat.h
+    ui/widgets/GameOptionWidgetSpinnerFloat.cpp
+    ui/widgets/GameOptionWidgetSpinnerInt.h
+    ui/widgets/GameOptionWidgetSpinnerInt.cpp
+    ui/widgets/GameOptionWidgetText.h
+    ui/widgets/GameOptionWidgetText.cpp
+    ui/widgets/GameOptionWidgetKeyBind.h
+    ui/widgets/GameOptionWidgetKeyBind.cpp
 
     # GUI - instance group view
     ui/instanceview/InstanceProxyModel.cpp
@@ -1000,6 +1008,10 @@ qt_wrap_ui(LAUNCHER_UI
     ui/widgets/GameOptionWidgetSlider.ui
     ui/widgets/GameOptionWidgetComboBox.ui
     ui/widgets/GameOptionWidgetCheckBox.ui
+    ui/widgets/GameOptionWidgetSpinnerFloat.ui
+    ui/widgets/GameOptionWidgetSpinnerInt.ui
+    ui/widgets/GameOptionWidgetText.ui
+    ui/widgets/GameOptionWidgetKeyBind.ui
     ui/dialogs/CopyInstanceDialog.ui
     ui/dialogs/ProfileSetupDialog.ui
     ui/dialogs/ProgressDialog.ui

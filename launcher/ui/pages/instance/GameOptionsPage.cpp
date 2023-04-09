@@ -36,13 +36,12 @@
  */
 
 #include "GameOptionsPage.h"
-#include "ui_GameOptionsPage.h"
 #include "minecraft/MinecraftInstance.h"
-#include "minecraft/gameoptions/GameOptions.h"
 #include "minecraft/gameoptions/GameOptionDelegate.h"
+#include "minecraft/gameoptions/GameOptions.h"
+#include "ui_GameOptionsPage.h"
 
-GameOptionsPage::GameOptionsPage(MinecraftInstance * inst, QWidget* parent)
-    : QWidget(parent), ui(new Ui::GameOptionsPage)
+GameOptionsPage::GameOptionsPage(MinecraftInstance* inst, QWidget* parent) : QWidget(parent), ui(new Ui::GameOptionsPage)
 {
     ui->setupUi(this);
     ui->tabWidget->tabBar()->hide();
@@ -54,14 +53,12 @@ GameOptionsPage::GameOptionsPage(MinecraftInstance * inst, QWidget* parent)
         ui->optionsView->openPersistentEditor(m_model->index(i, 2));
     }
     auto head = ui->optionsView->header();
-    head->setDefaultSectionSize(250);
-    if(head->count())
-    {
-        for(int i = 1; i < head->count(); i++)
-        {
+    head->setDefaultSectionSize(350);
+    if (head->count()) {
+        for (int i = 1; i < head->count(); i++) {
             head->setSectionResizeMode(i, QHeaderView::Interactive);
         }
-        head->setSectionResizeMode(head->count() -1, QHeaderView::Stretch);
+        head->setSectionResizeMode(head->count() - 1, QHeaderView::Stretch);
     }
     connect(ui->optionsView, &QTreeView::doubleClicked, this, &GameOptionsPage::OptionDoubleClicked);
 }
