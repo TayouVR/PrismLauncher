@@ -949,6 +949,9 @@ SET(LAUNCHER_SOURCES
     ui/instanceview/VisualGroup.h
 )
 
+if (QT_VERSION_MAJOR EQUAL 5)
+    target_include_directories(${LIB_NAME} INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/${LIB_NAME}_autogen/include)
+endif ()
 set(CMAKE_AUTOUIC)
 
 qt_add_resources(LAUNCHER_RESOURCES
