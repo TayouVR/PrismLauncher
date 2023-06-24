@@ -281,19 +281,13 @@ void ResourceFolderModel::applyUpdates(QSet<QString>& current_set, QSet<QString>
     {
         QSet<QString> removed_set = current_set;
         removed_set.subtract(new_set);
-
-        QList<int> removed_rows;
-        for (auto& removed : removed_set)
-            removed_rows.append(m_resources_index[removed]);
-
-        std::sort(removed_rows.begin(), removed_rows.end(), std::greater<int>());
-
-        for (auto& removed_index : removed_rows) {
-            auto removed_it = m_resources.begin() + removed_index;
-
+        for (auto& removed : removed_set) {
+            auto removed_it = m_resources.begin();
+            auto idx = 0;
+            for (; removed_it != m_resources.end() && removed_it->get()->internal_id() != removed; removed_it++, idx++)
+                ;
             Q_ASSERT(removed_it != m_resources.end());
             Q_ASSERT(removed_set.contains(removed_it->get()->internal_id()));
-
             if ((*removed_it)->isResolving()) {
                 auto ticket = (*removed_it)->resolutionTicket();
                 if (m_active_parse_tasks.contains(ticket)) {
@@ -301,8 +295,7 @@ void ResourceFolderModel::applyUpdates(QSet<QString>& current_set, QSet<QString>
                     task->abort();
                 }
             }
-
-            beginRemoveRows(QModelIndex(), removed_index, removed_index);
+            beginRemoveRows(QModelIndex(), idx, idx);
             m_resources.erase(removed_it);
             endRemoveRows();
         }
