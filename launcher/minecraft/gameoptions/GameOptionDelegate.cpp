@@ -97,7 +97,7 @@ void GameOptionDelegate::setModelData(QWidget* editor, QAbstractItemModel* model
 }
 QSize GameOptionDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    return QSize(option.rect.width() > 60 ? 60 : option.rect.width(), option.widget->height());
+    return QSize(option.rect.width(), option.widget->height() > 10 ? 10 : option.widget->height());
 }
 
 void GameOptionDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const

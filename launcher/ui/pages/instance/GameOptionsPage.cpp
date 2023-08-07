@@ -47,7 +47,6 @@ GameOptionsPage::GameOptionsPage(MinecraftInstance* inst, QWidget* parent) : QWi
     ui->setupUi(this);
     ui->tabWidget->tabBar()->hide();
     m_model = inst->gameOptionsModel();
-    m_model.reset();
     ui->optionsView->setModel(m_model.get());
     ui->optionsView->setItemDelegateForColumn(2, new GameOptionDelegate(ui->optionsView, m_model->getContents()));
     ui->optionsView->setEditTriggers(QAbstractItemView::AllEditTriggers);
@@ -57,13 +56,15 @@ GameOptionsPage::GameOptionsPage(MinecraftInstance* inst, QWidget* parent) : QWi
     auto head = new GameOptionsHeader(Qt::Horizontal, ui->optionsView);
     ui->optionsView->setHeader(head);
     if (head->count()) {
-        head->setDefaultSectionSize(350);
-        head->resizeSection(0, 300);
-        head->setSectionResizeMode(0, QHeaderView::Interactive);
-        head->setSectionResizeMode(1, QHeaderView::Stretch);
-        head->resizeSection(2, 300);
-        head->setSectionResizeMode(2, QHeaderView::Interactive);
-        head->setMinimumSectionSize(200);
+        head->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        head->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+        head->setSectionResizeMode(2, QHeaderView::Stretch);
+        // head->setDefaultSectionSize(350);
+        // head->resizeSection(0, 300);
+        // head->resizeSection(2, 300);
+        // head->setMinimumSectionSize(200);
+        // head->setMinimumSectionSize(30);
+        // head->setMaximumSectionSize(80);
     }
     connect(ui->optionsView, &QTreeView::doubleClicked, this, &GameOptionsPage::OptionDoubleClicked);
 }

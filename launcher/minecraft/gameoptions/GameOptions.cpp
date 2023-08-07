@@ -44,8 +44,8 @@ namespace {
 bool load(const QString& path,
           std::vector<GameOptionItem>& contents,
           int& version,
-          QMap<QString, std::shared_ptr<GameOption>>* &knownOptions,
-          QList<std::shared_ptr<KeyBindData>>* &keybindingOptions)
+          QMap<QString, std::shared_ptr<GameOption>>*& knownOptions,
+          QList<std::shared_ptr<KeyBindData>>*& keybindingOptions)
 {
     contents.clear();
     QFile file(path);
@@ -61,12 +61,7 @@ bool load(const QString& path,
     while (!file.atEnd()) {
         // This should be handled by toml++ or some other toml parser rather than this manual parsing
         QString line = QString::fromUtf8(file.readLine());
-        if (line.endsWith('\n')) {
-            line.chop(1);
-        }
-        if (line.endsWith('\r')) {
-            line.chop(1);
-        }
+        line = line.trimmed();
         GameOptionItem item = GameOptionItem();
 
         auto parts = line.split(':');
@@ -99,7 +94,7 @@ bool load(const QString& path,
             item.type = OptionType::KeyBind;
         } else {
             // This removes the leading and ending " from the string to display it more cleanly.
-            item.value = item.value.mid(1, item.value.length()-2);
+            item.value = item.value.mid(1, item.value.length() - 2);
             item.type = OptionType::String;
         }
 
