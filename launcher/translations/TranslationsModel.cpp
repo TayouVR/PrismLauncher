@@ -159,7 +159,6 @@ struct TranslationsModel::Private {
     std::unique_ptr<QTranslator> m_qt_translator;
     std::unique_ptr<QTranslator> m_app_translator;
 
-    Net::Download* m_index_task;
     QString m_downloadingTranslation;
     NetJob::Ptr m_dl_job;
     NetJob::Ptr m_index_job;
@@ -550,9 +549,7 @@ void TranslationsModel::downloadIndex()
     d->m_index_job.reset(new NetJob("Translations Index", APPLICATION->network()));
     MetaEntryPtr entry = APPLICATION->metacache()->resolveEntry("translations", "index_v2.json");
     entry->setStale(true);
-    auto task = Net::Download::makeCached(QUrl(BuildConfig.TRANSLATIONS_BASE_URL + "index_v2.json"), entry);
-    d->m_index_task = task.get();
-    d->m_index_job->addNetAction(task);
+    d->m_index_job->addNetAction(Net::Download::makeCached(QUrl(BuildConfig.TRANSLATIONS_BASE_URL + "index_v2.json"), entry));
     connect(d->m_index_job.get(), &NetJob::failed, this, &TranslationsModel::indexFailed);
     connect(d->m_index_job.get(), &NetJob::succeeded, this, &TranslationsModel::indexReceived);
     d->m_index_job->start();
