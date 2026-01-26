@@ -87,19 +87,6 @@ static InstallLoaderPage* pageCast(BasePage* page)
 InstallLoaderDialog::InstallLoaderDialog(PackProfile* profile, const QString& uid, QWidget* parent)
     : QDialog(parent), profile(profile), container(new PageContainer(this, QString(), this)), buttons(new QDialogButtonBox(this))
 {
-//	Qt::WindowFlags f = windowFlags();
-//
-//	// Remove dialog-ish types that macOS may map to panels/sheets
-//	f &= ~Qt::Dialog;
-//	f &= ~Qt::Sheet;
-//	f &= ~Qt::Tool;
-//
-//	// Ensure it is a regular top-level window
-//	f |= Qt::Window;
-//
-//	setWindowFlags(f);
-//	setWindowModality(Qt::NonModal);
-//
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
@@ -123,8 +110,19 @@ InstallLoaderDialog::InstallLoaderDialog(PackProfile* profile, const QString& ui
 
     container->addButtons(buttonLayout);
 
+	Qt::WindowFlags f = windowFlags();
+
+	// Remove dialog-ish types that macOS may map to panels/sheets
+	f &= ~Qt::Dialog;
+	f &= ~Qt::Sheet;
+	f &= ~Qt::Tool;
+
+	// Ensure it is a regular top-level window
+	f |= Qt::Window;
+
+	setWindowFlags(f);
     setWindowTitle(dialogTitle());
-    //setWindowModality(Qt::WindowModal);
+    setWindowModality(Qt::WindowModal);
     resize(520, 347);
 
     for (BasePage* page : container->getPages()) {
