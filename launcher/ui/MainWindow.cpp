@@ -360,6 +360,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
         connect(ui->actionLockToolbars, &QAction::toggled, this, &MainWindow::lockToolbars);
         lockToolbars(toolbarsLocked);
     }
+
+    // Track toolbar visibility and position changes for QSS theming
+    {
+        connect(ui->mainToolBar, &QToolBar::visibilityChanged, this, &MainWindow::updateToolbarProperties);
+        connect(ui->newsToolBar, &QToolBar::visibilityChanged, this, &MainWindow::updateToolbarProperties);
+        connect(ui->instanceToolBar, &QToolBar::visibilityChanged, this, &MainWindow::updateToolbarProperties);
+    }
+
     // start instance when double-clicked
     connect(view, &InstanceView::activated, this, &MainWindow::instanceActivated);
 
@@ -430,6 +438,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     setSelectedInstanceById(APPLICATION->settings()->get("SelectedInstance").toString());
 
+    updateToolbarProperties();
+
     // removing this looks stupid
     view->setFocus();
 
@@ -496,12 +506,38 @@ void MainWindow::setStatusBarVisibility(bool state)
     statusBar()->setVisible(state);
     APPLICATION->settings()->set("StatusBarVisible", state);
 }
+bool MainWindow::event(QEvent* event)
+{
+    if (event->type() == QEvent::ToolBarChange)
+        updateToolbarProperties();
+    return QMainWindow::event(event);
+}
+
 void MainWindow::lockToolbars(bool state)
 {
     ui->mainToolBar->setMovable(!state);
     ui->instanceToolBar->setMovable(!state);
     ui->newsToolBar->setMovable(!state);
     APPLICATION->settings()->set("ToolbarsLocked", state);
+}
+
+void MainWindow::updateToolbarProperties()
+{
+    auto checkArea = [this](Qt::ToolBarArea area) {
+        for (auto* tb : {static_cast<QToolBar*>(ui->mainToolBar), static_cast<QToolBar*>(ui->newsToolBar), static_cast<QToolBar*>(ui->instanceToolBar)}) {
+            if (tb->isVisible() && toolBarArea(tb) == area)
+                return true;
+        }
+        return false;
+    };
+
+    view->setProperty("toolbar-top", checkArea(Qt::TopToolBarArea) ? "true" : "false");
+    view->setProperty("toolbar-bottom", checkArea(Qt::BottomToolBarArea) ? "true" : "false");
+    view->setProperty("toolbar-left", checkArea(Qt::LeftToolBarArea) ? "true" : "false");
+    view->setProperty("toolbar-right", checkArea(Qt::RightToolBarArea) ? "true" : "false");
+
+    view->style()->unpolish(view);
+    view->style()->polish(view);
 }
 
 void MainWindow::konamiTriggered()

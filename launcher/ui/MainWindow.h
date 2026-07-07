@@ -85,6 +85,7 @@ class MainWindow : public QMainWindow {
     void isClosing();
 
    protected:
+    bool event(QEvent* event) override;
     QMenu* createPopupMenu() override;
 
    private slots:
@@ -231,6 +232,8 @@ class MainWindow : public QMainWindow {
 
     void runModalTask(Task* task);
     void instanceFromInstanceTask(InstanceTask* task);
+
+    void updateToolbarProperties();
 
    private:
     Ui::MainWindow* ui;
